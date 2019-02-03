@@ -1,0 +1,14 @@
+---
+- name: Ensure initscripts is installed.
+  yum: name=initscripts state=present
+  when: ansible_distribution == 'CentOS' or
+        ansible_distribution == 'Red Hat Enterprise Linux' or
+        ansible_distribution == 'RedHat'
+  register: initscripts
+  until: initscripts is success
+  retries: 10
+  delay: 2
+  tags:
+    - skip_ansible_lint
+  notify:
+    - Install SL
